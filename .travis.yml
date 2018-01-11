@@ -1,0 +1,59 @@
+language: python
+sudo: false
+
+python:
+  - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.6-dev" # 3.6 development branch
+  - "3.7-dev" # 3.7 development branch
+  - "nightly"
+
+
+matrix:
+  allow_failures:
+      - python: "3.6-dev"
+      - python: "3.7-dev"
+      - python: "nightly"
+
+virtualenv:
+  system_site_packages: false
+
+services:
+  - postgresql
+  - rabbitmq
+
+before_install:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get install -y openssl build-essential xorg libssl-dev xfonts-75dpi ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.4/wkhtmltox-0.12.4_linux-generic-amd64.tar.xz; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then tar -xvf wkhtmltox-0.12.4_linux-generic-amd64.tar.xz ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo mv wkhtmltox/bin/wkhtmltopdf /usr/bin/wkhtmltopdf ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then rm -rf wkhtmltox ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then rm wkhtmltox-0.12.4_linux-generic-amd64.tar.xz ; fi
+
+install:
+  - pip install psycopg2
+  - pip install anyblok
+  - pip install anyblok_attachment
+  - pip install flake8
+  - pip install coverage
+  - pip install nose
+  - pip install coveralls
+  - python setup.py develop
+
+env:
+  global:
+    - ANYBLOK_DATABASE_NAME=travis_ci_test
+    - ANYBLOK_DATABASE_DRIVER=postgresql
+    - ANYBLOK_DATABASE_USER=postgres
+
+script:
+  - flake8 anyblok_attachment
+  - psql -c 'drop database travis_ci_test;' -U postgres
+  - anyblok_createdb --install-all-bloks
+  - nosetests anyblok_attachment_jinja/bloks --with-anyblok-bloks -v -s --with-coverage --cover-package=anyblok_attachment_jinja
+  
+after_success:
+  coveralls
