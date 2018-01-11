@@ -31,7 +31,7 @@ with open(
 requirements = [
     'anyblok',
     'anyblok_attachment',
-    'jinja',
+    'jinja2',
 ]
 
 setup(
