@@ -51,7 +51,6 @@ env:
 
 script:
   - flake8 anyblok_attachment
-  - psql -c 'drop database travis_ci_test;' -U postgres
   - anyblok_createdb --install-all-bloks
   - nosetests anyblok_attachment_jinja/bloks --with-anyblok-bloks -v -s --with-coverage --cover-package=anyblok_attachment_jinja
   
