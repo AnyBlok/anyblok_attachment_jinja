@@ -27,6 +27,15 @@ API doc
     :show-inheritance:
     :noindex:
 
+**Parser**
+``````````````````
+
+.. automodule:: anyblok_attachment_jinja.bloks.jinja.parser
+.. autoanyblok-declaration:: Parser
+    :members:
+    :show-inheritance:
+    :noindex:
+
 **Exceptions**
 ``````````````
 

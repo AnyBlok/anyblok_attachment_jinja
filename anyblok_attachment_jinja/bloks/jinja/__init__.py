@@ -17,9 +17,12 @@ class ReportBlok(Blok):
 
     @classmethod
     def import_declaration_module(cls):
+        from . import parser  # noqa
         from . import template  # noqa
 
     @classmethod
     def reload_declaration_module(cls, reload):
+        from . import parser
+        reload(parser)
         from . import template
         reload(template)
