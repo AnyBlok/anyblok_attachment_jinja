@@ -26,3 +26,10 @@ API doc
     :members:
     :show-inheritance:
     :noindex:
+
+**Exceptions**
+``````````````
+
+.. automodule:: anyblok_attachment_jinja.bloks.jinja.exceptions
+.. autoexception:: TemplateJinjaException
+    :noindex:
