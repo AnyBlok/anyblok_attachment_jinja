@@ -6,7 +6,7 @@
 # v. 2.0. If a copy of the MPL was not distributed with this file,You can
 # obtain one at http://mozilla.org/MPL/2.0/.
 from anyblok import Declarations
-from anyblok.column import UUID, Text, Selection, Json
+from anyblok.column import UUID, String, Text, Selection, Json
 from anyblok.relationship import Many2One
 from .exceptions import TemplateJinjaException
 import jinja2
@@ -38,6 +38,7 @@ class Jinja(Mixin.WkHtml2Pdf, Attachment.Template):
     uuid = UUID(
         primary_key=True, nullable=False, binary=False,
         foreign_key=Attachment.Template.use('uuid').options(ondelete='cascade'))
+    name = String(nullable=True)
     jinja_paths = Text(nullable=False)
     contenttype = Selection(
         selections={
