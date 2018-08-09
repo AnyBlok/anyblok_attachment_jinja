@@ -13,6 +13,7 @@ class TestJinja(BlokTestCase):
 
     def test_html(self):
         template = self.registry.Attachment.Template.Jinja.insert(
+            name='test',
             template_path='report-jinja#=#tests/tmpl.jinja2',
             jinja_paths='report-jinja#=#tests',
             contenttype='text/html',
@@ -46,6 +47,7 @@ class TestJinja(BlokTestCase):
         wkhtml2pdf = self.registry.Attachment.WkHtml2Pdf.insert(
             label="Custom", page=page)
         template = self.registry.Attachment.Template.Jinja.insert(
+            name='test',
             template_path='report-jinja#=#tests/tmpl.jinja2',
             jinja_paths='report-jinja#=#tests',
             wkhtml2pdf_configuration=wkhtml2pdf,
@@ -63,6 +65,7 @@ class TestJinja(BlokTestCase):
     def test_pdf_without_wkhtml2pdf(self):
         with self.assertRaises(TemplateJinjaException):
             self.registry.Attachment.Template.Jinja.insert(
+                name='test',
                 template_path='report-jinja#=#tests/tmpl.jinja2',
                 contenttype='application/pdf',
                 model='Model.System.Blok',
@@ -71,6 +74,7 @@ class TestJinja(BlokTestCase):
 
     def test_bad_jinja_paths(self):
         template = self.registry.Attachment.Template.Jinja.insert(
+            name='test',
             template_path='report-jinja#=#tests/tmpl.jinja2',
             contenttype='text/html',
             model='Model.System.Blok',
