@@ -24,8 +24,8 @@
     :target: https://doc.anyblok-attachment-jinja.anyblok.org/?badge=latest
 
 
-AnyBlok / Dramatiq
-==================
+AnyBlok attachment jinja
+========================
 
 Improve AnyBlok `AnyBlok <http://doc.anyblok.org>`_ and `Attachment <https://doc.anyblok-attachment.anyblok.org>`_
 system.
