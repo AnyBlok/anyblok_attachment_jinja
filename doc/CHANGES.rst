@@ -11,5 +11,7 @@
 CHANGELOG
 =========
 
-1.0.0
------
+1.0.0 (2018-09-14)
+------------------
+
+* Added blok ``report-jinja``, templating engine jinja2 for AnyBlok reporting

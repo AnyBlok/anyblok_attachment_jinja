@@ -27,9 +27,17 @@
 AnyBlok attachment jinja
 ========================
 
-Improve AnyBlok `AnyBlok <http://doc.anyblok.org>`_ and `Attachment <https://doc.anyblok-attachment.anyblok.org>`_
+Improve `AnyBlok <http://doc.anyblok.org>`_ and `Attachment <https://doc.anyblok-attachment.anyblok.org>`_
 system.
 
-AnyBlok / Attachment is released under the terms of the `Mozilla Public License`.
++------------------+----------------+---------------------------------------------------------+
+| Blok             | Dependancies   | Description                                             |
++==================+================+=========================================================+
+| **report-jinja** | **attachment** | Use the `jinja2 <http://jinja.pocoo.org/docs/>`_        |
+|                  | **report**     | templating engine to create the document.               |
+|                  | **wkhtml2pdf** |                                                         |
++------------------+----------------+---------------------------------------------------------+
+
+AnyBlok / Attachment jinja is released under the terms of the `Mozilla Public License`.
 
 See the `latest documentation <http://doc.anyblok-attachment-jinja.anyblok.org/>`_
