@@ -68,7 +68,7 @@ class TestJinja:
         assert get_file['file']
 
     def test_pdf_without_wkhtml2pdf(self):
-        with self.assertRaises(TemplateJinjaException):
+        with pytest.raises(TemplateJinjaException):
             self.registry.Attachment.Template.Jinja.insert(
                 name='test',
                 template_path='report-jinja#=#tests/tmpl.jinja2',
@@ -89,5 +89,5 @@ class TestJinja:
             template=template,
             data={'title': 'My page', 'description': 'Hello world !!'}
         )
-        with self.assertRaises(TemplateJinjaException):
+        with pytest.raises(TemplateJinjaException):
             document.get_file()
