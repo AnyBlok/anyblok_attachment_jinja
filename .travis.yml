@@ -45,7 +45,7 @@ env:
 
 script:
   - flake8 anyblok_attachment_jinja --exclude=*/tests/*
-  - anyblok_createdb --install-all-bloks
+  - anyblok_createdb --install-bloks report-jinja
   - pytest --cov-report= --cov=anyblok_attachment_jinja anyblok_attachment_jinja/bloks
   
 after_success:
