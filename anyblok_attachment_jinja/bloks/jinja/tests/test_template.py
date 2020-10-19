@@ -5,11 +5,16 @@
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file,You can
 # obtain one at http://mozilla.org/MPL/2.0/.
-from anyblok.tests.testcase import BlokTestCase
+import pytest
 from ..exceptions import TemplateJinjaException
 
 
-class TestJinja(BlokTestCase):
+@pytest.mark.usefixtures('rollback_registry')
+class TestJinja:
+
+    @pytest.fixture(autouse=True, scope='function')
+    def define_registry(self, rollback_registry):
+        self.registry = rollback_registry
 
     def test_html(self):
         template = self.registry.Attachment.Template.Jinja.insert(
