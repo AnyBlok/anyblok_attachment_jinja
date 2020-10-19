@@ -44,7 +44,7 @@ class TestJinja:
                 b'\x8e*;q\xba(\x81\x1c\x17\x1dW\x1e\x02\xf2'
             ),
         }
-        self.assertEqual(get_file, wanted)
+        assert get_file == wanted
 
     def test_pdf(self):
         page = self.registry.Attachment.WkHtml2Pdf.Page.insert(
@@ -64,8 +64,8 @@ class TestJinja:
             data={'title': 'My page', 'description': 'Hello world !!'}
         )
         get_file = document.get_file()
-        self.assertEqual(get_file['contenttype'], 'application/pdf')
-        self.assertTrue(get_file['file'])
+        assert get_file['contenttype'] == 'application/pdf'
+        assert get_file['file']
 
     def test_pdf_without_wkhtml2pdf(self):
         with self.assertRaises(TemplateJinjaException):
