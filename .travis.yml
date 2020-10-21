@@ -19,7 +19,6 @@ virtualenv:
 
 services:
   - postgresql
-  - rabbitmq
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo apt-get update ; fi
@@ -31,14 +30,12 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then rm wkhtmltox-0.12.4_linux-generic-amd64.tar.xz ; fi
 
 install:
-  - pip install psycopg2
-  - pip install anyblok
-  - pip install anyblok_attachment
-  - pip install flake8
-  - pip install coverage
-  - pip install nose
-  - pip install coveralls
-  - python setup.py develop
+  - pip install -U pip
+  - pip install wheel
+  - pip install sqlalchemy psycopg2
+  - pip install -U flake8 coverage pytest pytest-cov
+  - pip install -U coveralls
+  - pip install .
 
 env:
   global:
@@ -47,9 +44,9 @@ env:
     - ANYBLOK_DATABASE_USER=postgres
 
 script:
-  - flake8 anyblok_attachment
-  - anyblok_createdb --install-all-bloks
-  - nosetests anyblok_attachment_jinja/bloks --with-anyblok-bloks -v -s --with-coverage --cover-package=anyblok_attachment_jinja
+  - flake8 anyblok_attachment_jinja --exclude=*/tests/*
+  - anyblok_createdb --install-bloks report-jinja
+  - pytest --cov-report= --cov=anyblok_attachment_jinja anyblok_attachment_jinja/bloks
   
 after_success:
-  coveralls
+  coveralls --data_file=.coverage --config_file=.coveragerc

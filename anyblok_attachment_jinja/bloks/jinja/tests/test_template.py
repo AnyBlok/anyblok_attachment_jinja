@@ -5,11 +5,16 @@
 # This Source Code Form is subject to the terms of the Mozilla Public License,
 # v. 2.0. If a copy of the MPL was not distributed with this file,You can
 # obtain one at http://mozilla.org/MPL/2.0/.
-from anyblok.tests.testcase import BlokTestCase
+import pytest
 from ..exceptions import TemplateJinjaException
 
 
-class TestJinja(BlokTestCase):
+@pytest.mark.usefixtures('rollback_registry')
+class TestJinja:
+
+    @pytest.fixture(autouse=True, scope='function')
+    def define_registry(self, rollback_registry):
+        self.registry = rollback_registry
 
     def test_html(self):
         template = self.registry.Attachment.Template.Jinja.insert(
@@ -39,7 +44,7 @@ class TestJinja(BlokTestCase):
                 b'\x8e*;q\xba(\x81\x1c\x17\x1dW\x1e\x02\xf2'
             ),
         }
-        self.assertEqual(get_file, wanted)
+        assert get_file == wanted
 
     def test_pdf(self):
         page = self.registry.Attachment.WkHtml2Pdf.Page.insert(
@@ -59,11 +64,11 @@ class TestJinja(BlokTestCase):
             data={'title': 'My page', 'description': 'Hello world !!'}
         )
         get_file = document.get_file()
-        self.assertEqual(get_file['contenttype'], 'application/pdf')
-        self.assertTrue(get_file['file'])
+        assert get_file['contenttype'] == 'application/pdf'
+        assert get_file['file']
 
     def test_pdf_without_wkhtml2pdf(self):
-        with self.assertRaises(TemplateJinjaException):
+        with pytest.raises(TemplateJinjaException):
             self.registry.Attachment.Template.Jinja.insert(
                 name='test',
                 template_path='report-jinja#=#tests/tmpl.jinja2',
@@ -84,5 +89,5 @@ class TestJinja(BlokTestCase):
             template=template,
             data={'title': 'My page', 'description': 'Hello world !!'}
         )
-        with self.assertRaises(TemplateJinjaException):
+        with pytest.raises(TemplateJinjaException):
             document.get_file()
